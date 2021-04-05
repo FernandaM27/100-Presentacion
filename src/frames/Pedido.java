@@ -16,6 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
 import javax.swing.border.EmptyBorder;
@@ -28,6 +29,9 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 public class Pedido extends javax.swing.JFrame {
 
     private int cont = 1;
+    //Set valores de posicion de paneles
+    private int panelX;
+    private int panelY;
 
     /**
      * Creates new form Pedido
@@ -35,26 +39,45 @@ public class Pedido extends javax.swing.JFrame {
     public Pedido() {
         initComponents();
         this.setLocationRelativeTo(null);
-        addPanels();
+        panelX = 0;
+        panelY = 5;
         this.modifyJPanelProducts();
         this.modifyJscroll();
+        //this.modifyScrollsAdded();
+        addPanels();
+        addPanelsY();
     }
-    
+
     //Cambiar color y ancho
     private void modifyJscroll() {
         jscrollProducts.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
         jscrollProducts.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
             @Override
             protected void configureScrollBarColors() {
-                this.thumbColor = new java.awt.Color(219,219,219);
+                this.thumbColor = new java.awt.Color(219, 219, 219);
             }
         });
+
         jscrollProducts.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
-        jscrollProducts.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 10));
     }
-    
-    private void modifyJPanelProducts(){
+
+    private void modifyScrollsAdded() {
+        //jScrollPaneAdded.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        //jScrollPaneAdded.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPaneAdded.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+            @Override
+            protected void configureScrollBarColors() {
+                this.thumbColor = new java.awt.Color(219, 219, 219);
+            }
+        });
+        jScrollPaneAdded.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
+        
+        //jScrollPaneAdded.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    }
+
+    private void modifyJPanelProducts() {
         this.jpanelProducts.setBackground(Color.WHITE);
+        this.jpProductsAd.setBackground(Color.WHITE);
     }
 
     /**
@@ -116,7 +139,8 @@ public class Pedido extends javax.swing.JFrame {
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPaneAdded = new javax.swing.JScrollPane();
+        jpProductsAd = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1400, 805));
@@ -610,6 +634,19 @@ public class Pedido extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        javax.swing.GroupLayout jpProductsAdLayout = new javax.swing.GroupLayout(jpProductsAd);
+        jpProductsAd.setLayout(jpProductsAdLayout);
+        jpProductsAdLayout.setHorizontalGroup(
+            jpProductsAdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 304, Short.MAX_VALUE)
+        );
+        jpProductsAdLayout.setVerticalGroup(
+            jpProductsAdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 244, Short.MAX_VALUE)
+        );
+
+        jScrollPaneAdded.setViewportView(jpProductsAd);
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -620,7 +657,7 @@ public class Pedido extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addComponent(jScrollPaneAdded)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -630,7 +667,7 @@ public class Pedido extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPaneAdded)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -644,8 +681,38 @@ public class Pedido extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    //Recibir product
     private void addPanels() {
+        int cont = 1;
+        //hasta la cantidad de productos de la categoría seleccionada 
+        for (int i = 0; i < 12; i++) {
+            if (cont == 3) {
+                panelY += 155;
+                panelX = 0;
+                cont = 1;
+            }
+            if (cont == 1) {
+                addPanel(panelX, panelY);
+                panelX += 400;
+            } else if (cont == 2) {
+                addPanel(panelX, panelY);
+            }
+            cont++;
+        }
+
+    }
+    //Para el de la derecha
+    private void addPanelsY() {
+        int cont = 0;
+        //hasta la cantidad de productos de la categoría seleccionada 
+        for (int i = 0; i < 6; i++) {
+            addProductsAdded(cont);
+            cont+=95;
+        }
+
+    }
+
+    //Recibir product
+    private void addPanel(int x, int y) {
         JPanel jp = new JPanel();
         JLabel productName = new javax.swing.JLabel();
         //jScrollPane1 = new javax.swing.JScrollPane();
@@ -655,16 +722,16 @@ public class Pedido extends javax.swing.JFrame {
         JLabel textButton = new JLabel();
 
         jp.setBackground(new java.awt.Color(255, 255, 255));
-        jp.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(219,219,219), 1, true));
-        jp.setBorder(new EmptyBorder(5, 5, 5, 5));
+        jp.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(219, 219, 219), 1, true));
+        //jp.setBorder(new EmptyBorder(5, 5, 5, 5));
         //jp.setToolTipText("Esto es un producto");
         //jp.setBorder(BorderFactory.createEmptyBorder(0,10,10,10));          
-
 
         //productoName
         productName.setText("Sopa de caracol");
         productName.setForeground(new java.awt.Color(230, 99, 57));
         productName.setFont(new Font("arial", Font.BOLD, 17));
+
         //TextArea Description product
         description.setColumns(20);
         description.setRows(5);
@@ -691,6 +758,7 @@ public class Pedido extends javax.swing.JFrame {
 
         jpButton.setBackground(Color.WHITE);
         jpButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(230, 99, 57), 1, true));
+
         javax.swing.GroupLayout jpButtonLayout = new javax.swing.GroupLayout(jpButton);
         jpButton.setLayout(jpButtonLayout);
         jpButtonLayout.setHorizontalGroup(
@@ -711,15 +779,16 @@ public class Pedido extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(productName)
-                                                .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(description, javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addComponent(price, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
                                                 .addComponent(jpButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addComponent(description))
+                                        .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(productName)
+                                                .addGap(0, 0, Short.MAX_VALUE)))
                                 .addContainerGap())
         );
 
@@ -736,10 +805,124 @@ public class Pedido extends javax.swing.JFrame {
                                 .addContainerGap(40, Short.MAX_VALUE))
         );
         //X && Y cambiarlos
-        jp.setBounds(0, 0, 300, 150);
+        jp.setBounds(x, y, 390, 150);
         this.jpanelProducts.add(jp);
         setVisible(true);
         addMethods(jpButton, textButton);
+    }
+
+    private void addProductsAdded(int y) {
+
+        JPanel jpAdded = new javax.swing.JPanel();
+        JLabel productNameAdded = new javax.swing.JLabel();
+        JLabel txtSubTotal = new javax.swing.JLabel();
+        JPanel jpCant = new javax.swing.JPanel();
+        JLabel txtNumItems = new javax.swing.JLabel();
+        JLabel txtRest = new javax.swing.JLabel();
+        JLabel txtMas = new javax.swing.JLabel();
+
+        jpAdded.setBackground(new java.awt.Color(255, 255, 255));
+
+        productNameAdded.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        productNameAdded.setText("Producto");
+
+        txtSubTotal.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtSubTotal.setText("$450");
+
+        jpCant.setBackground(new java.awt.Color(255, 255, 255));
+        jpCant.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+
+        txtNumItems.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtNumItems.setText("5");
+
+        txtRest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menos16.png"))); // NOI18N
+        txtRest.setText("-");
+
+        txtMas.setBackground(new java.awt.Color(255, 255, 255));
+        txtMas.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        txtMas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/mas16.png"))); // NOI18N
+        txtMas.setText("+");
+
+        jpAdded.setBackground(new java.awt.Color(255, 255, 255));
+
+        productNameAdded.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        productNameAdded.setText("Producto");
+
+        txtSubTotal.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtSubTotal.setText("$450");
+
+        jpCant.setBackground(new java.awt.Color(255, 255, 255));
+        jpCant.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+
+        txtNumItems.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtNumItems.setText("5");
+
+        txtRest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menos16.png"))); // NOI18N
+        txtRest.setText("-");
+
+        txtMas.setBackground(new java.awt.Color(255, 255, 255));
+        txtMas.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        txtMas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/mas16.png"))); // NOI18N
+        txtMas.setText("+");
+
+        javax.swing.GroupLayout jpCantLayout = new javax.swing.GroupLayout(jpCant);
+        jpCant.setLayout(jpCantLayout);
+        jpCantLayout.setHorizontalGroup(
+                jpCantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jpCantLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtRest, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(txtNumItems, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtMas, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31))
+        );
+        jpCantLayout.setVerticalGroup(
+                jpCantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jpCantLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jpCantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(txtNumItems)
+                                        .addComponent(txtRest)
+                                        .addComponent(txtMas))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jpAddedLayout = new javax.swing.GroupLayout(jpAdded);
+        jpAdded.setLayout(jpAddedLayout);
+        jpAddedLayout.setHorizontalGroup(
+                jpAddedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jpAddedLayout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addGroup(jpAddedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(productNameAdded)
+                                        .addComponent(txtSubTotal))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                                .addComponent(jpCant, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61))
+        );
+
+        jpAddedLayout.setVerticalGroup(
+                jpAddedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jpAddedLayout.createSequentialGroup()
+                                .addGroup(jpAddedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jpAddedLayout.createSequentialGroup()
+                                                .addGap(26, 26, 26)
+                                                .addComponent(jpCant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(jpAddedLayout.createSequentialGroup()
+                                                .addGap(24, 24, 24)
+                                                .addComponent(productNameAdded)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(txtSubTotal)))
+                                .addContainerGap(26, Short.MAX_VALUE))
+        );
+
+        jpAdded.setBounds(0, y, 300, 90);
+        jpAdded.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        jpProductsAd.add(jpAdded);
+        setVisible(true);
+        this.addMethods(txtRest, txtMas);
     }
 
     private void addMethods(JPanel panelButton, JLabel textButton) {
@@ -757,6 +940,27 @@ public class Pedido extends javax.swing.JFrame {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
                 System.out.println("Button ok!" + ": " + cont);
+                cont++;
+            }
+        });
+    }
+    
+    private void addMethods(JLabel rest, JLabel mas) {
+
+        rest.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                // you can open a new frame here as
+                // i have assumed you have declared "frame" as instance variable
+                System.out.println("Button menos!" + ": " + cont);
+                cont++;
+            }
+        });
+        
+        mas.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                // you can open a new frame here as
+                // i have assumed you have declared "frame" as instance variable
+                System.out.println("Button mas!" + ": " + cont);
                 cont++;
             }
         });
@@ -846,7 +1050,8 @@ public class Pedido extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPaneAdded;
+    private javax.swing.JPanel jpProductsAd;
     private javax.swing.JPanel jpanelProducts;
     private javax.swing.JScrollPane jscrollProducts;
     // End of variables declaration//GEN-END:variables
