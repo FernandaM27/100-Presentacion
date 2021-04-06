@@ -5,6 +5,7 @@
  */
 package frames;
 
+import com.sun.java.swing.plaf.windows.WindowsScrollBarUI;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
@@ -51,8 +52,8 @@ public class Pedido extends javax.swing.JFrame {
         panelY = 5;
         this.modifyJPanelProducts();
         this.modifyJscroll();
-//        this.modifyScrollsAdded();
-        for (int i = 0; i < 55; i++) {
+        this.modifyScrollsAdded();
+        for (int i = 0; i < 15; i++) {
             addPanels();
         }
         for (int i = 0; i < 8; i++) {
@@ -63,7 +64,7 @@ public class Pedido extends javax.swing.JFrame {
     //Cambiar color y ancho
     private void modifyJscroll() {
         jscrollProducts.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
-        jscrollProducts.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+        jscrollProducts.getVerticalScrollBar().setUI(new WindowsScrollBarUI(){
             @Override
             protected void configureScrollBarColors() {
                 this.thumbColor = new java.awt.Color(219, 219, 219);
@@ -74,19 +75,15 @@ public class Pedido extends javax.swing.JFrame {
     }
 
     private void modifyScrollsAdded() {
-        //jScrollPaneAdded.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        //jScrollPaneAdded.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPaneAdded.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
+        
+        jScrollPaneAdded.getVerticalScrollBar().setUI(new WindowsScrollBarUI() {
             @Override
             protected void configureScrollBarColors() {
                 this.thumbColor = new java.awt.Color(219, 219, 219);
             }
         });
         jScrollPaneAdded.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
-        jScrollPaneAdded.getHorizontalScrollBar().setPreferredSize(new Dimension(10, 0));
-
-        //jScrollPaneAdded.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-    }
+     }
 
     private void modifyJPanelProducts() {
         this.jpanelProducts.setBackground(Color.WHITE);
@@ -460,6 +457,8 @@ public class Pedido extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(62, 67, 67));
         jLabel8.setText("Jugos");
 
+        jscrollProducts.setBackground(new java.awt.Color(0, 0, 0));
+        jscrollProducts.setForeground(new java.awt.Color(255, 255, 255));
         jscrollProducts.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jscrollProducts.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         jscrollProducts.setPreferredSize(new java.awt.Dimension(866, 2640));
@@ -734,7 +733,6 @@ public class Pedido extends javax.swing.JFrame {
             }
  
         }
-        System.out.println(aux);
         if (auxProductos == 3) {
             panelY += 155;
             panelX = 0;
