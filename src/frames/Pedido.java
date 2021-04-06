@@ -29,7 +29,11 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 public class Pedido extends javax.swing.JFrame {
 
     private int productoPedidoAltura = 1;
+    private int productoAltura = 630;
     private int productosPedido;
+    private int productos;
+    private int auxProductos = 1;
+    private final int ANCHO;
     //Set valores de posicion de paneles
     private int panelX;
     private int panelY;
@@ -38,6 +42,8 @@ public class Pedido extends javax.swing.JFrame {
      * Creates new form Pedido
      */
     public Pedido() {
+        this.ANCHO = 850;
+        this.productos = 0;
         this.productosPedido = 0;
         initComponents();
         this.setLocationRelativeTo(null);
@@ -46,7 +52,9 @@ public class Pedido extends javax.swing.JFrame {
         this.modifyJPanelProducts();
         this.modifyJscroll();
 //        this.modifyScrollsAdded();
-        addPanels();
+        for (int i = 0; i < 55; i++) {
+            addPanels();
+        }
         for (int i = 0; i < 8; i++) {
             addPanelsY();
         }
@@ -454,10 +462,11 @@ public class Pedido extends javax.swing.JFrame {
 
         jscrollProducts.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jscrollProducts.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jscrollProducts.setPreferredSize(new java.awt.Dimension(866, 2640));
         jscrollProducts.setRowHeaderView(null);
 
-        jpanelProducts.setMinimumSize(new java.awt.Dimension(830, 1617));
-        jpanelProducts.setPreferredSize(new java.awt.Dimension(850, 1637));
+        jpanelProducts.setMinimumSize(new java.awt.Dimension(830, 637));
+        jpanelProducts.setPreferredSize(new java.awt.Dimension(850, 637));
         jpanelProducts.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jpanelProductsLayout = new javax.swing.GroupLayout(jpanelProducts);
@@ -468,7 +477,7 @@ public class Pedido extends javax.swing.JFrame {
         );
         jpanelProductsLayout.setVerticalGroup(
             jpanelProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1637, Short.MAX_VALUE)
+            .addGap(0, 637, Short.MAX_VALUE)
         );
 
         jscrollProducts.setViewportView(jpanelProducts);
@@ -481,7 +490,7 @@ public class Pedido extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel8)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jscrollProducts)
+            .addComponent(jscrollProducts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -712,23 +721,33 @@ public class Pedido extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addPanels() {
-        int cont = 1;
+        byte aux = 0;
         //hasta la cantidad de productos de la categoría seleccionada 
-        for (int i = 0; i < 12; i++) {
-            if (cont == 3) {
-                panelY += 155;
-                panelX = 0;
-                cont = 1;
+        if (productos >= 8) {
+            if (aux == 0) {
+                productoAltura +=88;
+                this.jpanelProducts.setPreferredSize(new Dimension(ANCHO, productoAltura));
+                this.jpanelProducts.revalidate();
+                aux=1;
+            } else if (aux==1) {
+                aux=0;
             }
-            if (cont == 1) {
-                addPanel(panelX, panelY);
-                panelX += 400;
-            } else if (cont == 2) {
-                addPanel(panelX, panelY);
-            }
-            cont++;
+ 
         }
-
+        System.out.println(aux);
+        if (auxProductos == 3) {
+            panelY += 155;
+            panelX = 0;
+            auxProductos = 1;
+        }
+        if (auxProductos == 1) {
+            addPanel(panelX, panelY);
+            panelX += 400;
+        } else if (auxProductos == 2) {
+            addPanel(panelX, panelY);
+        }
+        this.productos++;
+        auxProductos++;
     }
 
     //Para el de la derecha
@@ -743,10 +762,7 @@ public class Pedido extends javax.swing.JFrame {
         this.productosPedido++;
     }
 
-    private void addElementsProduct() {
-
-    }
-
+     
     //Recibir product
     private void addPanel(int x, int y) {
         JPanel jp = new JPanel();
