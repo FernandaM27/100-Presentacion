@@ -28,7 +28,8 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
  */
 public class Pedido extends javax.swing.JFrame {
 
-    private int cont = 1;
+    private int productoPedidoAltura = 1;
+    private int productosPedido;
     //Set valores de posicion de paneles
     private int panelX;
     private int panelY;
@@ -37,15 +38,18 @@ public class Pedido extends javax.swing.JFrame {
      * Creates new form Pedido
      */
     public Pedido() {
+        this.productosPedido = 0;
         initComponents();
         this.setLocationRelativeTo(null);
         panelX = 0;
         panelY = 5;
         this.modifyJPanelProducts();
         this.modifyJscroll();
-        //this.modifyScrollsAdded();
+//        this.modifyScrollsAdded();
         addPanels();
-        addPanelsY();
+        for (int i = 0; i < 8; i++) {
+            addPanelsY();
+        }
     }
 
     //Cambiar color y ancho
@@ -71,13 +75,15 @@ public class Pedido extends javax.swing.JFrame {
             }
         });
         jScrollPaneAdded.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
-        
+        jScrollPaneAdded.getHorizontalScrollBar().setPreferredSize(new Dimension(10, 0));
+
         //jScrollPaneAdded.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     }
 
     private void modifyJPanelProducts() {
         this.jpanelProducts.setBackground(Color.WHITE);
         this.jpProductsAd.setBackground(Color.WHITE);
+
     }
 
     /**
@@ -433,7 +439,7 @@ public class Pedido extends javax.swing.JFrame {
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3);
@@ -446,15 +452,23 @@ public class Pedido extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(62, 67, 67));
         jLabel8.setText("Jugos");
 
+        jscrollProducts.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jscrollProducts.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jscrollProducts.setRowHeaderView(null);
+
+        jpanelProducts.setMinimumSize(new java.awt.Dimension(830, 1617));
+        jpanelProducts.setPreferredSize(new java.awt.Dimension(850, 1637));
+        jpanelProducts.setRequestFocusEnabled(false);
+
         javax.swing.GroupLayout jpanelProductsLayout = new javax.swing.GroupLayout(jpanelProducts);
         jpanelProducts.setLayout(jpanelProductsLayout);
         jpanelProductsLayout.setHorizontalGroup(
             jpanelProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 804, Short.MAX_VALUE)
+            .addGap(0, 850, Short.MAX_VALUE)
         );
         jpanelProductsLayout.setVerticalGroup(
             jpanelProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 604, Short.MAX_VALUE)
+            .addGap(0, 1637, Short.MAX_VALUE)
         );
 
         jscrollProducts.setViewportView(jpanelProducts);
@@ -475,7 +489,7 @@ public class Pedido extends javax.swing.JFrame {
                 .addGap(16, 16, 16)
                 .addComponent(jLabel8)
                 .addGap(18, 18, 18)
-                .addComponent(jscrollProducts))
+                .addComponent(jscrollProducts, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel4);
@@ -634,15 +648,30 @@ public class Pedido extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jScrollPaneAdded.setBackground(new java.awt.Color(102, 0, 255));
+        jScrollPaneAdded.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPaneAdded.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPaneAdded.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jScrollPaneAdded.setHorizontalScrollBar(null);
+        jScrollPaneAdded.setMinimumSize(new java.awt.Dimension(257, 1210));
+        jScrollPaneAdded.setName(""); // NOI18N
+        jScrollPaneAdded.setPreferredSize(new java.awt.Dimension(247, 1300));
+        jScrollPaneAdded.setRequestFocusEnabled(false);
+
+        jpProductsAd.setBackground(new java.awt.Color(255, 255, 255));
+        jpProductsAd.setMinimumSize(new java.awt.Dimension(300, 321));
+        jpProductsAd.setName(""); // NOI18N
+        jpProductsAd.setPreferredSize(new java.awt.Dimension(290, 320));
+
         javax.swing.GroupLayout jpProductsAdLayout = new javax.swing.GroupLayout(jpProductsAd);
         jpProductsAd.setLayout(jpProductsAdLayout);
         jpProductsAdLayout.setHorizontalGroup(
             jpProductsAdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 304, Short.MAX_VALUE)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
         jpProductsAdLayout.setVerticalGroup(
             jpProductsAdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 244, Short.MAX_VALUE)
+            .addGap(0, 321, Short.MAX_VALUE)
         );
 
         jScrollPaneAdded.setViewportView(jpProductsAd);
@@ -657,7 +686,7 @@ public class Pedido extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPaneAdded)
+            .addComponent(jScrollPaneAdded, javax.swing.GroupLayout.DEFAULT_SIZE, 308, Short.MAX_VALUE)
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -667,9 +696,10 @@ public class Pedido extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneAdded)
+                .addComponent(jScrollPaneAdded, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
 
         jPanel1.add(jPanel5);
@@ -700,14 +730,20 @@ public class Pedido extends javax.swing.JFrame {
         }
 
     }
+
     //Para el de la derecha
     private void addPanelsY() {
-        int cont = 0;
         //hasta la cantidad de productos de la categoría seleccionada 
-        for (int i = 0; i < 6; i++) {
-            addProductsAdded(cont);
-            cont+=95;
+        addProductsAdded(productoPedidoAltura);
+        productoPedidoAltura += 95;
+        if (this.productosPedido >= 3) {
+            this.jpProductsAd.setPreferredSize(new Dimension(jpProductsAd.getSize().width, productoPedidoAltura));
+            this.jpProductsAd.revalidate();
         }
+        this.productosPedido++;
+    }
+
+    private void addElementsProduct() {
 
     }
 
@@ -900,7 +936,7 @@ public class Pedido extends javax.swing.JFrame {
                                         .addComponent(txtSubTotal))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                                 .addComponent(jpCant, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(61, 61, 61))
+                                .addGap(261, 261, 261))
         );
 
         jpAddedLayout.setVerticalGroup(
@@ -917,8 +953,7 @@ public class Pedido extends javax.swing.JFrame {
                                                 .addComponent(txtSubTotal)))
                                 .addContainerGap(26, Short.MAX_VALUE))
         );
-
-        jpAdded.setBounds(0, y, 300, 90);
+        jpAdded.setBounds(0, y, 270, 90);
         jpAdded.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jpProductsAd.add(jpAdded);
         setVisible(true);
@@ -930,8 +965,8 @@ public class Pedido extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent e) {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                System.out.println("Button ok!" + ": " + cont);
-                cont++;
+                System.out.println("Button ok!" + ": " + productoPedidoAltura);
+                productoPedidoAltura++;
             }
         });
 
@@ -939,29 +974,29 @@ public class Pedido extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent e) {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                System.out.println("Button ok!" + ": " + cont);
-                cont++;
+                System.out.println("Button ok!" + ": " + productoPedidoAltura);
+                productoPedidoAltura++;
             }
         });
     }
-    
+
     private void addMethods(JLabel rest, JLabel mas) {
 
         rest.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                System.out.println("Button menos!" + ": " + cont);
-                cont++;
+                System.out.println("Button menos!" + ": " + productoPedidoAltura);
+                productoPedidoAltura++;
             }
         });
-        
+
         mas.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 // you can open a new frame here as
                 // i have assumed you have declared "frame" as instance variable
-                System.out.println("Button mas!" + ": " + cont);
-                cont++;
+                System.out.println("Button mas!" + ": " + productoPedidoAltura);
+                productoPedidoAltura++;
             }
         });
     }
