@@ -11,8 +11,11 @@ import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.TextArea;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -64,7 +67,7 @@ public class Pedido extends javax.swing.JFrame {
     //Cambiar color y ancho
     private void modifyJscroll() {
         jscrollProducts.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
-        jscrollProducts.getVerticalScrollBar().setUI(new WindowsScrollBarUI(){
+        jscrollProducts.getVerticalScrollBar().setUI(new WindowsScrollBarUI() {
             @Override
             protected void configureScrollBarColors() {
                 this.thumbColor = new java.awt.Color(219, 219, 219);
@@ -75,7 +78,7 @@ public class Pedido extends javax.swing.JFrame {
     }
 
     private void modifyScrollsAdded() {
-        
+
         jScrollPaneAdded.getVerticalScrollBar().setUI(new WindowsScrollBarUI() {
             @Override
             protected void configureScrollBarColors() {
@@ -83,7 +86,7 @@ public class Pedido extends javax.swing.JFrame {
             }
         });
         jScrollPaneAdded.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));
-     }
+    }
 
     private void modifyJPanelProducts() {
         this.jpanelProducts.setBackground(Color.WHITE);
@@ -721,36 +724,41 @@ public class Pedido extends javax.swing.JFrame {
 
     private void addPanels() {
         byte aux = 0;
+        String des = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus elementum eros nec congue. In sit amet neque erat. Pellentesque suscipit sem tempor leo finibus rhoncus.";
+        aux = increaseYProducts(aux);
         //hasta la cantidad de productos de la categoría seleccionada 
-        if (productos >= 8) {
-            if (aux == 0) {
-                productoAltura +=88;
-                this.jpanelProducts.setPreferredSize(new Dimension(ANCHO, productoAltura));
-                this.jpanelProducts.revalidate();
-                aux=1;
-            } else if (aux==1) {
-                aux=0;
-            }
- 
-        }
         if (auxProductos == 3) {
             panelY += 155;
             panelX = 0;
             auxProductos = 1;
         }
         if (auxProductos == 1) {
-            addPanel(panelX, panelY);
+            addPanel(panelX, panelY, "Sopa de caracol", "$500", des);
             panelX += 400;
         } else if (auxProductos == 2) {
-            addPanel(panelX, panelY);
+            addPanel(panelX, panelY, "Sopa de caracol", "$500", des);
         }
         this.productos++;
         auxProductos++;
     }
 
+    private byte increaseYProducts(byte aux) {
+        if (productos >= 8) {
+            if (aux == 0) {
+                productoAltura += 88;
+                this.jpanelProducts.setPreferredSize(new Dimension(ANCHO, productoAltura));
+                this.jpanelProducts.revalidate();
+                return aux = 1;
+            } else {
+                return aux = 0;
+            }
+
+        }
+        return -1;
+    }
+
     //Para el de la derecha
     private void addPanelsY() {
-        //hasta la cantidad de productos de la categoría seleccionada 
         addProductsAdded(productoPedidoAltura);
         productoPedidoAltura += 95;
         if (this.productosPedido >= 3) {
@@ -760,12 +768,10 @@ public class Pedido extends javax.swing.JFrame {
         this.productosPedido++;
     }
 
-     
     //Recibir product
-    private void addPanel(int x, int y) {
+    private void addPanel(int x, int y, String producto, String precio, String descripcion) {
         JPanel jp = new JPanel();
         JLabel productName = new javax.swing.JLabel();
-        //jScrollPane1 = new javax.swing.JScrollPane();
         JTextArea description = new javax.swing.JTextArea();
         JLabel price = new javax.swing.JLabel();
         JPanel jpButton = new JPanel();
@@ -773,56 +779,16 @@ public class Pedido extends javax.swing.JFrame {
 
         jp.setBackground(new java.awt.Color(255, 255, 255));
         jp.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(219, 219, 219), 1, true));
-        //jp.setBorder(new EmptyBorder(5, 5, 5, 5));
-        //jp.setToolTipText("Esto es un producto");
-        //jp.setBorder(BorderFactory.createEmptyBorder(0,10,10,10));          
 
-        //productoName
-        productName.setText("Sopa de caracol");
-        productName.setForeground(new java.awt.Color(230, 99, 57));
-        productName.setFont(new Font("arial", Font.BOLD, 17));
-
-        //TextArea Description product
-        description.setColumns(20);
-        description.setRows(5);
-        description.setBackground(Color.WHITE);
-        description.setEditable(false);
-        description.setLineWrap(true);
-        description.setBorder(null);
-        String des = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book";
-        description.setText(des);
-        description.setForeground(new java.awt.Color(122, 132, 131));
-        //jScrollPane1.setViewportView(juancho);
-
+        //productoName adds product name
+        productName = productName(productName, producto);
+        //TextArea adds the product description
+        description = productDescription(description, descripcion);
         //Label price
-        price.setFont(new Font("arial", Font.BOLD, 17));
-        price.setForeground(new java.awt.Color(230, 99, 57));
-        price.setText("$500");
-
+        price= setProductPrice(price, precio);
         //Jpanel Button add or edit
-        textButton.setText("  Agregar");
-        ImageIcon icon = new ImageIcon("src/icons/mas16px.png");
-        textButton.setIcon(icon);
-        textButton.setFont(new Font("arial", Font.PLAIN, 14));
-        textButton.setForeground(new java.awt.Color(230, 99, 57));
-
-        jpButton.setBackground(Color.WHITE);
-        jpButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(230, 99, 57), 1, true));
-
-        javax.swing.GroupLayout jpButtonLayout = new javax.swing.GroupLayout(jpButton);
-        jpButton.setLayout(jpButtonLayout);
-        jpButtonLayout.setHorizontalGroup(
-                jpButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jpButtonLayout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(textButton)
-                                .addContainerGap(35, Short.MAX_VALUE))
-        );
-        jpButtonLayout.setVerticalGroup(
-                jpButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(textButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-        );
-
+        textButton=(JLabel) buttonAddP(textButton, jpButton).get(0);
+        jpButton=(JPanel) buttonAddP(textButton, jpButton).get(1);
         //InitComponents
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jp);
         jp.setLayout(jPanel1Layout);
@@ -859,6 +825,56 @@ public class Pedido extends javax.swing.JFrame {
         this.jpanelProducts.add(jp);
         setVisible(true);
         addMethods(jpButton, textButton);
+    }
+    private List<Object> buttonAddP(JLabel textButton, JPanel jpButton){
+        textButton.setText("  Agregar");
+        ImageIcon icon = new ImageIcon("src/icons/mas16px.png");
+        textButton.setIcon(icon);
+        textButton.setFont(new Font("arial", Font.PLAIN, 14));
+        textButton.setForeground(new java.awt.Color(230, 99, 57));
+        jpButton.setBackground(Color.WHITE);
+        jpButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(230, 99, 57), 1, true));
+         javax.swing.GroupLayout jpButtonLayout = new javax.swing.GroupLayout(jpButton);
+        jpButton.setLayout(jpButtonLayout);
+        jpButtonLayout.setHorizontalGroup(
+                jpButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jpButtonLayout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(textButton)
+                                .addContainerGap(35, Short.MAX_VALUE))
+        );
+        jpButtonLayout.setVerticalGroup(
+                jpButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(textButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+        );
+        List<Object> btn= List.of(textButton,jpButton);
+        return btn;
+    }
+    private JLabel setProductPrice(JLabel price, String precio) {
+        price.setFont(new Font("arial", Font.BOLD, 17));
+        price.setForeground(new java.awt.Color(230, 99, 57));
+        price.setText(precio);
+        return price;
+    }
+
+    private JLabel productName(JLabel productName, String producto) {
+        productName.setText(producto);
+        productName.setForeground(new java.awt.Color(230, 99, 57));
+        productName.setFont(new Font("arial", Font.BOLD, 17));
+        return productName;
+    }
+
+    private JTextArea productDescription(JTextArea description, String descripcion) {
+        description.setColumns(20);
+        description.setRows(5);
+        description.setBackground(Color.WHITE);
+        description.setEditable(false);
+        description.setLineWrap(true);
+        description.setBorder(null);
+        String des = descripcion;
+        description.setText(des);
+        description.setForeground(new java.awt.Color(122, 132, 131));
+        return description;
     }
 
     private void addProductsAdded(int y) {
