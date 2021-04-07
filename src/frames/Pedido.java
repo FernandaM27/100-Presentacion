@@ -7,24 +7,17 @@ package frames;
 
 import com.sun.java.swing.plaf.windows.WindowsScrollBarUI;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.TextArea;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import java.util.List;
-import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import static javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER;
-import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 
 /**
  *
@@ -62,6 +55,7 @@ public class Pedido extends javax.swing.JFrame {
         for (int i = 0; i < 8; i++) {
             addPanelsY();
         }
+        this.setResizable(false);
     }
 
     //Cambiar color y ancho
@@ -785,12 +779,22 @@ public class Pedido extends javax.swing.JFrame {
         //TextArea adds the product description
         description = productDescription(description, descripcion);
         //Label price
-        price= setProductPrice(price, precio);
+        price = setProductPrice(price, precio);
         //Jpanel Button add or edit
-        textButton=(JLabel) buttonAddP(textButton, jpButton).get(0);
-        jpButton=(JPanel) buttonAddP(textButton, jpButton).get(1);
+        textButton = (JLabel) buttonAddP(textButton, jpButton).get(0);
+        jpButton = (JPanel) buttonAddP(textButton, jpButton).get(1);
         //InitComponents
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jp);
+        jPanel1Layout=initCompProd(jPanel1Layout, description, price, jpButton, productName,jp);
+        //X && Y cambiarlos
+        jp.setBounds(x, y, 390, 150);
+        this.jpanelProducts.add(jp);
+        setVisible(true);
+        addMethods(jpButton, textButton);
+    }
+
+    private GroupLayout initCompProd(GroupLayout jPanel1Layout, JTextArea description, JLabel price, JPanel jpButton, JLabel productName,JPanel jp) {
+
         jp.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -806,7 +810,7 @@ public class Pedido extends javax.swing.JFrame {
                                                 .addComponent(productName)
                                                 .addGap(0, 0, Short.MAX_VALUE)))
                                 .addContainerGap())
-        );
+                                        );
 
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -819,14 +823,11 @@ public class Pedido extends javax.swing.JFrame {
                                         .addComponent(price, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                                         .addComponent(jpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap(40, Short.MAX_VALUE))
-        );
-        //X && Y cambiarlos
-        jp.setBounds(x, y, 390, 150);
-        this.jpanelProducts.add(jp);
-        setVisible(true);
-        addMethods(jpButton, textButton);
+                                        );
+        return jPanel1Layout;
     }
-    private List<Object> buttonAddP(JLabel textButton, JPanel jpButton){
+
+    private List<Object> buttonAddP(JLabel textButton, JPanel jpButton) {
         textButton.setText("  Agregar");
         ImageIcon icon = new ImageIcon("src/icons/mas16px.png");
         textButton.setIcon(icon);
@@ -834,7 +835,7 @@ public class Pedido extends javax.swing.JFrame {
         textButton.setForeground(new java.awt.Color(230, 99, 57));
         jpButton.setBackground(Color.WHITE);
         jpButton.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(230, 99, 57), 1, true));
-         javax.swing.GroupLayout jpButtonLayout = new javax.swing.GroupLayout(jpButton);
+        javax.swing.GroupLayout jpButtonLayout = new javax.swing.GroupLayout(jpButton);
         jpButton.setLayout(jpButtonLayout);
         jpButtonLayout.setHorizontalGroup(
                 jpButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -847,9 +848,10 @@ public class Pedido extends javax.swing.JFrame {
                 jpButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(textButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
         );
-        List<Object> btn= List.of(textButton,jpButton);
+        List<Object> btn = List.of(textButton, jpButton);
         return btn;
     }
+
     private JLabel setProductPrice(JLabel price, String precio) {
         price.setFont(new Font("arial", Font.BOLD, 17));
         price.setForeground(new java.awt.Color(230, 99, 57));
