@@ -31,6 +31,10 @@ public class Pedido extends javax.swing.JFrame {
     private int productos;
     private int auxProductos = 1;
     private final int ANCHO;
+    //maneja el cambio de colores del panel6
+    private Color color = new Color(230, 99, 57);
+    //maneja el cambio de colores del panel8
+    private Color color2 = new Color(255, 255, 255);
     //Set valores de posicion de paneles
     private int panelX;
     private int panelY;
@@ -178,6 +182,17 @@ public class Pedido extends javax.swing.JFrame {
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 20, -1, -1));
 
         jPanel6.setBackground(new java.awt.Color(230, 99, 57));
+        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel6MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel6MouseExited(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -203,6 +218,17 @@ public class Pedido extends javax.swing.JFrame {
         jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(493, 13, -1, -1));
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel8MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel8MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel8MouseExited(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Arial", 1, 13)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(122, 132, 131));
@@ -716,6 +742,64 @@ public class Pedido extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jPanel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseClicked
+        jPanel8.setBackground(new Color(230, 99, 57));
+        this.color2 = jPanel8.getBackground();
+        this.color = Color.WHITE;
+        this.jLabel6.setForeground(Color.WHITE);
+        this.jPanel6.setBackground(Color.WHITE);
+        this.jLabel5.setForeground(new Color(122, 132, 131));
+    }//GEN-LAST:event_jPanel8MouseClicked
+
+    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
+        jPanel6.setBackground(new Color(230, 99, 57));
+        this.color = jPanel6.getBackground();
+        this.color2 = Color.WHITE;
+        this.jLabel5.setForeground(Color.WHITE);
+        this.jPanel8.setBackground(Color.WHITE);
+        this.jLabel6.setForeground(new Color(122, 132, 131));
+    }//GEN-LAST:event_jPanel6MouseClicked
+
+    private void jPanel8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseEntered
+        if (this.color2.getRGB() == Color.white.getRGB()) {
+            this.jPanel8.setBackground(new Color(250, 190, 182));
+            this.jLabel6.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_jPanel8MouseEntered
+
+    private void jPanel8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel8MouseExited
+        Color naranja = new Color(230, 99, 57);
+        if (this.color2.getRGB() == naranja.getRGB()) {
+            jPanel8.setBackground(new Color(230, 99, 57));
+            this.jLabel6.setForeground(Color.WHITE);
+        }
+
+        if (this.color2.getRGB() == Color.white.getRGB()) {
+            jPanel8.setBackground(Color.WHITE);
+            this.jLabel6.setForeground(new Color(122, 132, 131));
+        }
+    }//GEN-LAST:event_jPanel8MouseExited
+
+    private void jPanel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseEntered
+        if (this.color.getRGB() == Color.white.getRGB()) {
+            this.jPanel6.setBackground(new Color(250, 190, 182));
+            this.jLabel5.setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_jPanel6MouseEntered
+
+    private void jPanel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseExited
+        Color naranja = new Color(230, 99, 57);
+        if (this.color.getRGB() == naranja.getRGB()) {
+            jPanel6.setBackground(new Color(230, 99, 57));
+            this.jLabel5.setForeground(Color.WHITE);
+        }
+
+        if (this.color.getRGB() == Color.white.getRGB()) {
+            jPanel6.setBackground(Color.WHITE);
+            this.jLabel5.setForeground(new Color(122, 132, 131));
+        }
+    }//GEN-LAST:event_jPanel6MouseExited
+
     private void addPanels() {
         byte aux = 0;
         String des = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus elementum eros nec congue. In sit amet neque erat. Pellentesque suscipit sem tempor leo finibus rhoncus.";
@@ -892,32 +976,32 @@ public class Pedido extends javax.swing.JFrame {
 
         jpAdded.setBackground(new java.awt.Color(255, 255, 255));
         //invoca la función que se encarga de asignar el producto al lista del pedido
-        productNameAdded= productAddedName(productNameAdded, producto);
+        productNameAdded = productAddedName(productNameAdded, producto);
         //invoca la función que se encarga de asignar el precio del producto
-        txtSubTotal= productAddedPrice(txtSubTotal, precio);
+        txtSubTotal = productAddedPrice(txtSubTotal, precio);
         //invoca la función que ajusta la cantidad 
-        List<Object> cantidadElements= productAddedCantidad(jpCant, txtNumItems, txtRest, txtMas, cantidad);
-        jpCant= (JPanel)cantidadElements.get(0);
-        txtNumItems = (JLabel)cantidadElements.get(1);
-        txtRest= (JLabel) cantidadElements.get(2);
-        txtMas=(JLabel)cantidadElements.get(3);
-        
+        List<Object> cantidadElements = productAddedCantidad(jpCant, txtNumItems, txtRest, txtMas, cantidad);
+        jpCant = (JPanel) cantidadElements.get(0);
+        txtNumItems = (JLabel) cantidadElements.get(1);
+        txtRest = (JLabel) cantidadElements.get(2);
+        txtMas = (JLabel) cantidadElements.get(3);
+
         //init elements
         javax.swing.GroupLayout jpCantLayout = new javax.swing.GroupLayout(jpCant);
-        jpCantLayout= jpCantLayoutAdded(jpCant, jpCantLayout, txtRest, txtNumItems, txtMas);
+        jpCantLayout = jpCantLayoutAdded(jpCant, jpCantLayout, txtRest, txtNumItems, txtMas);
 
         javax.swing.GroupLayout jpAddedLayout = new javax.swing.GroupLayout(jpAdded);
-        jpAddedLayout= jpAddedLayout(jpAdded, jpCant, jpAddedLayout, productNameAdded, txtSubTotal);
-        
+        jpAddedLayout = jpAddedLayout(jpAdded, jpCant, jpAddedLayout, productNameAdded, txtSubTotal);
+
         jpAdded.setBounds(0, y, 270, 90);
         jpAdded.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
         jpProductsAd.add(jpAdded);
         setVisible(true);
         this.addMethods(txtRest, txtMas);
     }
-    
-    private GroupLayout jpCantLayoutAdded(JPanel jpCant,GroupLayout jpCantLayout, JLabel txtRest, JLabel txtNumItems,JLabel txtMas){
-    jpCant.setLayout(jpCantLayout);
+
+    private GroupLayout jpCantLayoutAdded(JPanel jpCant, GroupLayout jpCantLayout, JLabel txtRest, JLabel txtNumItems, JLabel txtMas) {
+        jpCant.setLayout(jpCantLayout);
         jpCantLayout.setHorizontalGroup(
                 jpCantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jpCantLayout.createSequentialGroup()
@@ -939,10 +1023,11 @@ public class Pedido extends javax.swing.JFrame {
                                         .addComponent(txtMas))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-       return jpCantLayout; 
+        return jpCantLayout;
     }
-    private GroupLayout jpAddedLayout(JPanel jpAdded,JPanel jpCant,GroupLayout jpAddedLayout, JLabel productNameAdded, JLabel txtSubTotal){
-     jpAdded.setLayout(jpAddedLayout);
+
+    private GroupLayout jpAddedLayout(JPanel jpAdded, JPanel jpCant, GroupLayout jpAddedLayout, JLabel productNameAdded, JLabel txtSubTotal) {
+        jpAdded.setLayout(jpAddedLayout);
         jpAddedLayout.setHorizontalGroup(
                 jpAddedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jpAddedLayout.createSequentialGroup()
@@ -969,15 +1054,16 @@ public class Pedido extends javax.swing.JFrame {
                                                 .addComponent(txtSubTotal)))
                                 .addContainerGap(26, Short.MAX_VALUE))
         );
-    return jpAddedLayout;
+        return jpAddedLayout;
     }
-    
+
     private JLabel productAddedName(JLabel productNameAdded, String producto) {
         productNameAdded.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         productNameAdded.setText(producto);
         return productNameAdded;
     }
-    private List<Object> productAddedCantidad(JPanel jpCant, JLabel txtNumItems,JLabel txtRest,JLabel txtMas, String cantidad) {
+
+    private List<Object> productAddedCantidad(JPanel jpCant, JLabel txtNumItems, JLabel txtRest, JLabel txtMas, String cantidad) {
         jpCant.setBackground(new java.awt.Color(255, 255, 255));
         jpCant.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
 
@@ -991,11 +1077,12 @@ public class Pedido extends javax.swing.JFrame {
         txtMas.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         txtMas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/mas16.png"))); // NOI18N
         txtMas.setText("+");
-        return List.of(jpCant,txtNumItems,txtRest,txtMas);
+        return List.of(jpCant, txtNumItems, txtRest, txtMas);
     }
+
     private JLabel productAddedPrice(JLabel txtSubTotal, String precio) {
         txtSubTotal.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        txtSubTotal.setText("$"+precio);
+        txtSubTotal.setText("$" + precio);
         return txtSubTotal;
     }
 
@@ -1006,7 +1093,7 @@ public class Pedido extends javax.swing.JFrame {
                 // i have assumed you have declared "frame" as instance variable
                 System.out.println("Button ok!" + ": " + productoPedidoAltura);
                 productoPedidoAltura++;
-                
+
             }
         });
 
