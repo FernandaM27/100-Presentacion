@@ -753,7 +753,7 @@ public class Pedido extends javax.swing.JFrame {
 
     //Para el de la derecha
     private void addPanelsY() {
-        addProductsAdded(productoPedidoAltura);
+        addProductsAdded(productoPedidoAltura, "cosa", "500", "1");
         productoPedidoAltura += 95;
         if (this.productosPedido >= 3) {
             this.jpProductsAd.setPreferredSize(new Dimension(jpProductsAd.getSize().width, productoPedidoAltura));
@@ -785,7 +785,7 @@ public class Pedido extends javax.swing.JFrame {
         jpButton = (JPanel) buttonAddP(textButton, jpButton).get(1);
         //InitComponents
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jp);
-        jPanel1Layout=initCompProd(jPanel1Layout, description, price, jpButton, productName,jp);
+        jPanel1Layout = initCompProd(jPanel1Layout, description, price, jpButton, productName, jp);
         //X && Y cambiarlos
         jp.setBounds(x, y, 390, 150);
         this.jpanelProducts.add(jp);
@@ -793,7 +793,7 @@ public class Pedido extends javax.swing.JFrame {
         addMethods(jpButton, textButton);
     }
 
-    private GroupLayout initCompProd(GroupLayout jPanel1Layout, JTextArea description, JLabel price, JPanel jpButton, JLabel productName,JPanel jp) {
+    private GroupLayout initCompProd(GroupLayout jPanel1Layout, JTextArea description, JLabel price, JPanel jpButton, JLabel productName, JPanel jp) {
 
         jp.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -810,7 +810,7 @@ public class Pedido extends javax.swing.JFrame {
                                                 .addComponent(productName)
                                                 .addGap(0, 0, Short.MAX_VALUE)))
                                 .addContainerGap())
-                                        );
+        );
 
         jPanel1Layout.setVerticalGroup(
                 jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -823,7 +823,7 @@ public class Pedido extends javax.swing.JFrame {
                                         .addComponent(price, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
                                         .addComponent(jpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap(40, Short.MAX_VALUE))
-                                        );
+        );
         return jPanel1Layout;
     }
 
@@ -879,7 +879,8 @@ public class Pedido extends javax.swing.JFrame {
         return description;
     }
 
-    private void addProductsAdded(int y) {
+    //separar funcion 
+    private void addProductsAdded(int y, String producto, String precio, String cantidad) {
 
         JPanel jpAdded = new javax.swing.JPanel();
         JLabel productNameAdded = new javax.swing.JLabel();
@@ -890,51 +891,33 @@ public class Pedido extends javax.swing.JFrame {
         JLabel txtMas = new javax.swing.JLabel();
 
         jpAdded.setBackground(new java.awt.Color(255, 255, 255));
-
-        productNameAdded.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        productNameAdded.setText("Producto");
-
-        txtSubTotal.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        txtSubTotal.setText("$450");
-
-        jpCant.setBackground(new java.awt.Color(255, 255, 255));
-        jpCant.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-
-        txtNumItems.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        txtNumItems.setText("5");
-
-        txtRest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menos16.png"))); // NOI18N
-        txtRest.setText("-");
-
-        txtMas.setBackground(new java.awt.Color(255, 255, 255));
-        txtMas.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        txtMas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/mas16.png"))); // NOI18N
-        txtMas.setText("+");
-
-        jpAdded.setBackground(new java.awt.Color(255, 255, 255));
-
-        productNameAdded.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        productNameAdded.setText("Producto");
-
-        txtSubTotal.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        txtSubTotal.setText("$450");
-
-        jpCant.setBackground(new java.awt.Color(255, 255, 255));
-        jpCant.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-
-        txtNumItems.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        txtNumItems.setText("5");
-
-        txtRest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menos16.png"))); // NOI18N
-        txtRest.setText("-");
-
-        txtMas.setBackground(new java.awt.Color(255, 255, 255));
-        txtMas.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        txtMas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/mas16.png"))); // NOI18N
-        txtMas.setText("+");
-
+        //invoca la función que se encarga de asignar el producto al lista del pedido
+        productNameAdded= productAddedName(productNameAdded, producto);
+        //invoca la función que se encarga de asignar el precio del producto
+        txtSubTotal= productAddedPrice(txtSubTotal, precio);
+        //invoca la función que ajusta la cantidad 
+        List<Object> cantidadElements= productAddedCantidad(jpCant, txtNumItems, txtRest, txtMas, cantidad);
+        jpCant= (JPanel)cantidadElements.get(0);
+        txtNumItems = (JLabel)cantidadElements.get(1);
+        txtRest= (JLabel) cantidadElements.get(2);
+        txtMas=(JLabel)cantidadElements.get(3);
+        
+        //init elements
         javax.swing.GroupLayout jpCantLayout = new javax.swing.GroupLayout(jpCant);
-        jpCant.setLayout(jpCantLayout);
+        jpCantLayout= jpCantLayoutAdded(jpCant, jpCantLayout, txtRest, txtNumItems, txtMas);
+
+        javax.swing.GroupLayout jpAddedLayout = new javax.swing.GroupLayout(jpAdded);
+        jpAddedLayout= jpAddedLayout(jpAdded, jpCant, jpAddedLayout, productNameAdded, txtSubTotal);
+        
+        jpAdded.setBounds(0, y, 270, 90);
+        jpAdded.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+        jpProductsAd.add(jpAdded);
+        setVisible(true);
+        this.addMethods(txtRest, txtMas);
+    }
+    
+    private GroupLayout jpCantLayoutAdded(JPanel jpCant,GroupLayout jpCantLayout, JLabel txtRest, JLabel txtNumItems,JLabel txtMas){
+    jpCant.setLayout(jpCantLayout);
         jpCantLayout.setHorizontalGroup(
                 jpCantLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jpCantLayout.createSequentialGroup()
@@ -956,9 +939,10 @@ public class Pedido extends javax.swing.JFrame {
                                         .addComponent(txtMas))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-
-        javax.swing.GroupLayout jpAddedLayout = new javax.swing.GroupLayout(jpAdded);
-        jpAdded.setLayout(jpAddedLayout);
+       return jpCantLayout; 
+    }
+    private GroupLayout jpAddedLayout(JPanel jpAdded,JPanel jpCant,GroupLayout jpAddedLayout, JLabel productNameAdded, JLabel txtSubTotal){
+     jpAdded.setLayout(jpAddedLayout);
         jpAddedLayout.setHorizontalGroup(
                 jpAddedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jpAddedLayout.createSequentialGroup()
@@ -985,11 +969,34 @@ public class Pedido extends javax.swing.JFrame {
                                                 .addComponent(txtSubTotal)))
                                 .addContainerGap(26, Short.MAX_VALUE))
         );
-        jpAdded.setBounds(0, y, 270, 90);
-        jpAdded.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
-        jpProductsAd.add(jpAdded);
-        setVisible(true);
-        this.addMethods(txtRest, txtMas);
+    return jpAddedLayout;
+    }
+    
+    private JLabel productAddedName(JLabel productNameAdded, String producto) {
+        productNameAdded.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        productNameAdded.setText(producto);
+        return productNameAdded;
+    }
+    private List<Object> productAddedCantidad(JPanel jpCant, JLabel txtNumItems,JLabel txtRest,JLabel txtMas, String cantidad) {
+        jpCant.setBackground(new java.awt.Color(255, 255, 255));
+        jpCant.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(204, 204, 204), 1, true));
+
+        txtNumItems.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtNumItems.setText(cantidad);
+
+        txtRest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/menos16.png"))); // NOI18N
+        txtRest.setText("-");
+
+        txtMas.setBackground(new java.awt.Color(255, 255, 255));
+        txtMas.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        txtMas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/mas16.png"))); // NOI18N
+        txtMas.setText("+");
+        return List.of(jpCant,txtNumItems,txtRest,txtMas);
+    }
+    private JLabel productAddedPrice(JLabel txtSubTotal, String precio) {
+        txtSubTotal.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        txtSubTotal.setText("$"+precio);
+        return txtSubTotal;
     }
 
     private void addMethods(JPanel panelButton, JLabel textButton) {
@@ -999,6 +1006,7 @@ public class Pedido extends javax.swing.JFrame {
                 // i have assumed you have declared "frame" as instance variable
                 System.out.println("Button ok!" + ": " + productoPedidoAltura);
                 productoPedidoAltura++;
+                
             }
         });
 
